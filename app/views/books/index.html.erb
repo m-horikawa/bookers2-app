@@ -1,0 +1,14 @@
+<h1>Books</h1>
+
+<% @books.each do |book| %>
+<div>
+  <p><%= attachment_image_tag book.user, :profile_image, :fill, 20, 20, fallback: "no_image.jpg" %></p> <!--投稿ユーザーの画像-->
+
+  <%= link_to book_path(book.id) do %> <!--詳細画面へのリンク-->
+    <p><%= book.title %></p> <!--本のタイトル-->
+  <% end %>
+
+  <p><%= book.body %></p> <!--本の内容-->
+</div>
+<% end%>
+<%= paginate @books %>

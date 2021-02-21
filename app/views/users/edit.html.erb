@@ -1,0 +1,21 @@
+<h2>User info</h2>
+
+<% if @user.errors.any? %> <!--エラー時のメッセージ出力-->
+  <%= @user.errors.count %>件のエラーが発生しました
+  <% @user.errors.full_messages.each do |message| %>
+    <%= message %>
+  <% end %>
+<% end %>
+
+<%= form_with model:@user, local:true do |f| %>
+  <label for="inputName">Name</label> <!--ユーザーの名前-->
+  <%= f.text_field :name, autofocus: true, id:"inputName", placeholder:"名前" %>
+
+  <%= attachment_image_tag @user, :profile_image, :fill, 20, 20, fallback: "no_image.jpg"%>
+    <label for="inputImage">Image</label> <!--ユーザーのプロフィール画像-->
+  <% f.attachment_field :profile_image, placeholder: "プロフィール画像" %>
+
+  <!--ユーザーの紹介文-->
+
+  <%= f.submit "Update User" %>
+<% end %>
