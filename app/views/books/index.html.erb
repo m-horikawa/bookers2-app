@@ -1,14 +1,61 @@
-<h1>Books</h1>
 
-<% @books.each do |book| %>
-<div>
-  <p><%= attachment_image_tag book.user, :profile_image, :fill, 20, 20, fallback: "no_image.jpg" %></p> <!--投稿ユーザーの画像-->
 
-  <%= link_to book_path(book.id) do %> <!--詳細画面へのリンク-->
-    <p><%= book.title %></p> <!--本のタイトル-->
+<main>
+    <% if flash[:notice] %>
+    <p id="notice">
+      <%= flash[:notice] %>
+    </p>
   <% end %>
-
-  <p><%= book.body %></p> <!--本の内容-->
-</div>
-<% end%>
-<%= paginate @books %>
+  <div class="container px-5 px-sm-0">
+    <div id="container" px-5 px-sm-0>
+      <% if @new_book.errors.any? %> <!--エラー時のメッセージ出力-->
+      <h3>
+        <%= @new_book.errors.count %> errors prohibited this obj from being saved:
+      </h3>
+      <ul>
+        <% @new_book.errors.full_messages.each do |message| %>
+        <li>
+          <%= message %>
+        </li>
+        <% end %>
+      </ul>
+      <% end %>
+    <div class="row">
+      <div class="col-md-3">
+        <%= render 'users/list', user: @user %> <!--User infoの部分テンプレート-->
+        <%= render 'books/list', book: @new_book %> <!--New Bookの部分テンプレート-->
+      </div>
+      <div class="col-md-8 offset-md-1">
+        <h2>Books</h2>
+        <table class="table table-hover table-inverse">
+          <thread>
+            <th></th>
+            <th>Title</th>
+            <th>Opinion</th>
+            <th colspan="3"></th>
+          </thread>
+          <tbody>
+            <% @books.each do |book| %>
+            <tr>
+              <td>
+                <%= link_to user_path(book.user.id) do %>
+                <%= attachment_image_tag book.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to book_path(book.id) do %>
+                <%= book.title %>
+                <% end %>
+              </td>
+              <td>
+                <%= book.body %>
+              </td>
+            </th>
+            <% end%>
+            <%= paginate @books %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>

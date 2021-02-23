@@ -1,13 +1,43 @@
-<h1>Book detail</h1>
-
-<div class="book-body">
-  <p><%= attachment_image_tag @book.user, :profile_image, :fill, 20, 20, fallback: "no_image.jpg" %></p> <!--投稿ユーザーの画像-->
-  <p><%= @book.user.name %></p> <!--投稿ユーザーの名前-->
-  <p><%= @book.title %></p> <!--本のタイトル-->
-  <p><%= @book.body %></p> <!--本の内容-->
-
-  <% if @book.user == current_user %>
-    <%= link_to "Edit", edit_book_path(@book) %> <!--本の編集-->
-    <%= link_to "Destroy", book_path(@book), method: :delete %> <!--本の削除-->
+<main>
+  <% if flash[:notice] %>
+    <p id="notice">
+      <%= flash[:notice] %>
+    </p>
   <% end %>
-</div>
+
+  <div class="container px-5 px-sm-0">
+    <div class="row">
+      <div class="col-md-3">
+        <%= render 'users/list', user: @user %> <!--User infoの部分テンプレート-->
+        <%= render 'books/list', book: @new_book %> <!--New Bookの部分テンプレート-->
+      </div>
+      <div class="col-md-8 offset-md-1">
+        <h2>Book detail</h2>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>
+                <%= attachment_image_tag @book.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>
+                <%= link_to user_path(@book.user.id) do %>
+                <%= @book.user.name %>
+                <% end %>
+              </td>
+              <td>
+                <%= @book.title %>
+              </td>
+              <td>
+                <%= @book.body %>
+              </td>
+              <td>
+                <% if @book.user == current_user %>
+                  <%= link_to "Edit", edit_book_path(@book), class: "btn btn-sm btn-success" %> <!--本の編集-->
+                  <%= link_to "Destroy", book_path(@book), method: :delete, class: "btn btn-sm btn-danger" %> <!--本の削除-->
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>

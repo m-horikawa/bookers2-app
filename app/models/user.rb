@@ -10,8 +10,7 @@ class User < ApplicationRecord
   has_many :books, dependent: :destroy
   attachment :profile_image
 
-  validates :name, presence: true, uniqueness: true, length: { minimum: 2, maximum: 20 } # 名前は一意性を持たせ、かつ2～20文字の範囲
-  # validates :introduction, length: { maximum: 50 } # introduction：最大50文字まで
-
+  validates :name, uniqueness: true, length: { minimum: 2, maximum: 20 } # 名前は一意性を持たせ、かつ2～20文字の範囲
+  validates :introduction, length: { maximum: 50 } # introduction：最大50文字まで
 
 end

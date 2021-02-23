@@ -1,21 +1,43 @@
-<h2>User info</h2>
+<main>
+  <p id="notice"></p>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-8 col-lg-5 px-sm-0 mx-auto">
+        <h2>User info</h2>
 
-<% if @user.errors.any? %> <!--エラー時のメッセージ出力-->
-  <%= @user.errors.count %>件のエラーが発生しました
-  <% @user.errors.full_messages.each do |message| %>
-    <%= message %>
-  <% end %>
-<% end %>
+        <div id="error_explanation">
+          <% if @user.errors.any? %> <!--エラー時のメッセージ出力-->
+          <h3>
+            <%= @user.errors.count %> errors prohibited this obj from being saved:
+          </h3>
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+            <li>
+              <%= message %>
+            </li>
+            <% end %>
+          </ul>
+          <% end %>
+        </div>
 
-<%= form_with model:@user, local:true do |f| %>
-  <label for="inputName">Name</label> <!--ユーザーの名前-->
-  <%= f.text_field :name, autofocus: true, id:"inputName", placeholder:"名前" %>
-
-  <%= attachment_image_tag @user, :profile_image, :fill, 20, 20, fallback: "no_image.jpg"%>
-    <label for="inputImage">Image</label> <!--ユーザーのプロフィール画像-->
-  <% f.attachment_field :profile_image, placeholder: "プロフィール画像" %>
-
-  <!--ユーザーの紹介文-->
-
-  <%= f.submit "Update User" %>
-<% end %>
+        <%= form_with model:@user, local:true do |f| %>
+        <div class="form-group">
+          <label for="user_name">Name</label><br /> <!--ユーザーの名前-->
+          <%= f.text_field :name, autofocus: true, id:"inputName", placeholder:"" %>
+        </div>
+        <div class="form-group">
+          <label for="inputImage">Image</label><br /> <!--ユーザーのプロフィール画像-->
+          <%= f.attachment_field :profile_image, placeholder: "プロフィール画像" %>
+        </div>
+        <div class="form-group">
+          <label for="inputIntroduction">Introduction</label><br /> <!--ユーザーの紹介文-->
+          <%= f.text_area :introduction, autofocus: true, id:"inputInputintroduction", placeholder:"" %>
+        </div>
+        <div class="form-group">
+          <%= f.submit "Update User" %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  </main>
